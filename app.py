@@ -10,16 +10,25 @@ API_KEY='NW84PZQEPS9SN9S7'
 
 class PointsIbovespa(Resource):
     def get(self):
-        url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=BOVA11.SAO&apikey={}".format(API_KEY)
-        callApi = requests.get(url)
-        response = callApi.json()
-        points ={
-            "status":callApi.status_code,
-            "points" : response["Global Quote"]["05. price"]
-        }
+        points = searchCompaniesPoints()
         return points
 
-api.add_resource(PointsIbovespa,"/points/ibovespa")
+class CompanyPoints(Resource):
+    def get(self,company):
+        points = searchCompaniesPoints(company)
+        return points
 
+def searchCompaniesPoints(company="BOVA11.SAO"):
+    url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={}&apikey={}".format(company,API_KEY)
+    callApi = requests.get(url)
+    response = callApi.json()
+    points = {
+        "status": callApi.status_code,
+        "points": response["Global Quote"]["05. price"]
+    }
+    return points
+
+api.add_resource(PointsIbovespa,"/points/ibovespa")
+api.add_resource(CompanyPoints,"/points/<company>")
 if __name__ == "__main__":
     app.run(debug=True)
