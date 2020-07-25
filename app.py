@@ -2,8 +2,8 @@ from flask import Flask, request
 from flask_restful import Resource, Api
 import requests
 
-app = Flask(__name__)
-api = Api(app)
+web_app = Flask("web_app")
+api = Api(web_app)
 
 API_KEY = 'NW84PZQEPS9SN9S7'
 
@@ -32,12 +32,15 @@ def searchCompaniesPoints(company="BOVA11.SAO"):
             }
             return points
         else:
-            return {'error': 'Inform a valid company'}
+            return {"status": callApi.status_code,
+                    'error': 'Inform a valid company'}
     else:
-        return {'error': 'Something went wrong'}
+        return {
+            "status": callApi.status_code,
+            'error': 'Something went wrong'}
 
 
 api.add_resource(PointsIbovespa, "/ibovespa")
-api.add_resource(CompanyPoints, "/points/<company>")
+api.add_resource(CompanyPoints, "/points/<string:company>")
 if __name__ == "__main__":
-    app.run(debug=True)
+    web_app.run(debug=True)
