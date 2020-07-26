@@ -1,8 +1,9 @@
 from flask import Flask, request
 from flask_restful import Resource, Api
 import requests
-
+from flask_cors import CORS
 web_app = Flask("web_app")
+CORS(web_app)
 api = Api(web_app)
 
 API_KEY = 'NW84PZQEPS9SN9S7'
