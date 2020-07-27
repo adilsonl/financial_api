@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script text="text/javascript" src="./js/main.js"></script>
+    <script text="text/javascript" src="./js/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="bootstrap-4.4.1-dist/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial API</title>
+</head>
+
+<body>
+    <div id="app">
+        <div class="container">
+            <div class="row justify-content-center">
+                <h1>Consulta de Pontos</h1>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="mr-2 btn-group-vertical" role="group" aria-label="Second group">
+                        <button type="button" class="btn btn-secondary" onclick='get_ibovespa()'>Ibovespa</button>
+                        <button type="button" class="btn btn-secondary"
+                            onclick='get_company_points("ITUB","Itáu")'>Itau</button>
+                        <button type="button" class="btn btn-secondary"
+                            onclick='get_company_points("VALE","Vale")'>Vale</button>
+                        <button type="button" class="btn btn-secondary"
+                            onclick='get_company_points("PETR4.SAO","Petrobras")'>Petrobras</button>
+
+
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 id="nameCompany"></h2>
+                        </div>
+                        <div class="card-body">
+                            <blockquote class="blockquote mb-0">
+                                <p id="pointsCompany"> </p>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="input-group mb-2">
+                <input type="text" class="form-control" id="searchCompany" placeholder="Pesquise Empresas"
+                    aria-describedby="button-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" onclick="serachCompanies()">Buscar</button>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="mr-2 btn-group-vertical " role="group" id='results'>
+
+            </div>
+        </div>
+
+
+
+    </div>
+</body>
+
+</html>
