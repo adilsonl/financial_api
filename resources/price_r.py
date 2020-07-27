@@ -4,11 +4,12 @@ from models.price import Price
 import json
 from app import db
 
+
 class PriceAddGetAll(Resource):
     def post(self):
         try:
             data = json.loads(request.data)
-            new_price = Price(data['id_company'], data['price'])
+            new_price = Price(data["id_company"], data["price"])
             db.session.add(new_price)
             db.session.commit()
             return {"message": f"Price {new_price.name} has been created successfully."}
@@ -33,8 +34,8 @@ class PriceRoutes(Resource):
         try:
             data = json.loads(request.data)
             price = Price.query.filter_by(id=id).first()
-            price.id_company = data['id_company']
-            price.price = data['price']
+            price.id_company = data["id_company"]
+            price.price = data["price"]
             db.session.commit()
             return {"message": f"Price  {price.price} successfully updated"}
         except Exception as e:

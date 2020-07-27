@@ -9,12 +9,14 @@ class UserAddGetAll(Resource):
     def post(self):
         try:
             data = json.loads(request.data)
-            new_user = User(data['user_name'], data['company'], data['password'])
+            new_user = User(data["user_name"], data["company"], data["password"])
             db.session.add(new_user)
             db.session.commit()
-            return {"message": f"user {new_user.user_name} has been created successfully."}
+            return {
+                "message": f"user {new_user.user_name} has been created successfully."
+            }
         except Exception as e:
-            return {"message":"Error :"}
+            return {"message": "Error :"}
 
     def get(self):
         users = User.query.all()
@@ -23,26 +25,26 @@ class UserAddGetAll(Resource):
 
 
 class UserRoutes(Resource):
-    def get(self,id):
+    def get(self, id):
         try:
             user = User.query.filter_by(id=id).first()
-            return  user.serialize_without_password()
+            return user.serialize_without_password()
         except Exception as e:
             return {"message": "Error "}
 
-    def put(self,id):
+    def put(self, id):
         try:
             data = json.loads(request.data)
             user = User.query.filter_by(id=id).first()
-            user.user_name = data['user_name']
-            user.company = data['company']
-            user.password = data['password']
+            user.user_name = data["user_name"]
+            user.company = data["company"]
+            user.password = data["password"]
             db.session.commit()
             return {"message": f"user {user.user_name} successfully updated"}
         except Exception as e:
             return {"message": "Error "}
 
-    def delete(self,id):
+    def delete(self, id):
         try:
             user = User.query.filter_by(id=id).first()
             db.session.delete(user)
@@ -51,6 +53,3 @@ class UserRoutes(Resource):
 
         except Exception as e:
             return {"message": "Error "}
-
-
-

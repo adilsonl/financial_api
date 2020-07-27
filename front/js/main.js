@@ -17,7 +17,10 @@ function get_company_points(symbol,company){
         success:function(response){
             console.log(response)
             $('#nameCompany').html(company)
-            $('#pointsCompany').html("Pontos: "+response.points)
+            if(response.points !== undefined)
+                $('#pointsCompany').html("Pontos: "+response.points)
+            else
+                 $('#pointsCompany').html("Erro ao carregar aos pontos")
 
         }
     })
