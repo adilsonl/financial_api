@@ -1,10 +1,18 @@
-from flask import Flask, request
+from flask import Flask
 from flask_restful import Resource, Api
 import requests
 from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+
 web_app = Flask("web_app")
+web_app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:123Senha@localhost:5432/bank_api"
+web_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(web_app)
+migrate = Migrate(web_app, db)
 CORS(web_app)
 api = Api(web_app)
+from models import price,company,user
 
 API_KEY = 'NW84PZQEPS9SN9S7'
 
