@@ -1,7 +1,7 @@
 # Financial API
 Consulta de pontos da bolsa de valores utilizando o Alpha Vantage
 
-##Front-end
+## Front-end
 Para a criação do front-end foi utilizado
 - Jquery
 - Bootstrap
@@ -11,7 +11,7 @@ Para acessar o site, basta abrir o arquivo index.html em ~/financial_api/front/i
 ## Back-end
 Este projeto foi desenvolvido utilizando o microframework Flask
 
-##Configuração do back-end
+## Configuração do back-end
 No diretório do projeto abra o prompt e execute o seguinte comando para instalação das bibliotecas 
 
 `$ pip install -r requirements.txt`
@@ -46,18 +46,22 @@ Para iniciar o projeto
 
 `$ flask run`
 
-##EndPoints
-###Ibovespa
+## EndPoints
+
+## Ibovespa
+
 Consulta dos pontos do Ibovespa
 Método GET
 Url :http://127.0.0.1:5000/ibovespa
-###Empresas
+## Empresas
+
 Consulta de pontos de outras empresas
 Método GET
 Url :http://127.0.0.1:5000/points/< symbol >
 Exemplo : http://127.0.0.1:5000/points/ITUB
 
-###CRUD Usuario
+## CRUD Usuario
+
 Método GET
 Url : http://127.0.0.1:5000/user
 Retorna todos os registros cadastrados no banco
@@ -78,7 +82,8 @@ Método DELETE
 Url : http://127.0.0.1:5000/user/< id >
 Deleta o registro que possua o id
 
-###CRUD Empresa
+## CRUD Empresa
+
 Método GET
 Url : http://127.0.0.1:5000/company
 Retorna todos os registros cadastrados no banco
@@ -99,7 +104,8 @@ Método DELETE
 Url : http://127.0.0.1:5000/company/< id >
 Deleta o registro que possua o id
 
-###CRUD Preço
+## CRUD Preço
+
 Método GET
 Url : http://127.0.0.1:5000/price
 Retorna todos os registros cadastrados no banco
@@ -121,6 +127,7 @@ Url : http://127.0.0.1:5000/price/< id >
 Deleta o registro que possua o id
 
 ## Testes
+
 Para realização dos testes execute o seguinte comando no diretorio do projeto
 `$ py.test`
 
