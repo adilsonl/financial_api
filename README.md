@@ -58,72 +58,88 @@ Url :http://127.0.0.1:5000/ibovespa
 Consulta de pontos de outras empresas
 Método GET
 Url :http://127.0.0.1:5000/points/< symbol >
+
 Exemplo : http://127.0.0.1:5000/points/ITUB
 
 ## CRUD Usuario
 
 Método GET
 Url : http://127.0.0.1:5000/user
+
 Retorna todos os registros cadastrados no banco
 
 Url : http://127.0.0.1:5000/user/< id >
+
 Retorna o registro do id
 
 Método POST
 Url :http://127.0.0.1:5000/user
+
 Body da requisição com json com as seguintes chaves: user_name ,company, password
 
 Método PUT
 Url : http://127.0.0.1:5000/user/< id >
+
 Body da requisição com json com as seguintes chaves: user_name ,company, password
 Atualiza o registro
 
 Método DELETE
 Url : http://127.0.0.1:5000/user/< id >
+
 Deleta o registro que possua o id
 
 ## CRUD Empresa
 
 Método GET
 Url : http://127.0.0.1:5000/company
+
 Retorna todos os registros cadastrados no banco
 
 Url : http://127.0.0.1:5000/company/< id >
+
 Retorna o registro do id
 
 Método POST
 Url : http://127.0.0.1:5000/company
+
 Body da requisição com json com as seguintes chaves: name ,symbol
 
 Método PUT
 Url : http://127.0.0.1:5000/company/< id >
+
 Body da requisição com json com as seguintes chaves:  name ,symbol
 Atualiza o registro
 
 Método DELETE
 Url : http://127.0.0.1:5000/company/< id >
+
 Deleta o registro que possua o id
 
 ## CRUD Preço
 
 Método GET
 Url : http://127.0.0.1:5000/price
+
 Retorna todos os registros cadastrados no banco
 
 Url : http://127.0.0.1:5000/price/< id >
+
 Retorna o registro do id
 
 Método POST
 Url : http://127.0.0.1:5000/price
+
 Body da requisição com json com as seguintes chaves: id_company ,price
 
 Método PUT
 Url : http://127.0.0.1:5000/price/< id >
+
 Body da requisição com json com as seguintes chaves:  id_company ,price
 Atualiza o registro
 
 Método DELETE
 Url : http://127.0.0.1:5000/price/< id >
+
 Deleta o registro que possua o id
 
 ## Testes
@@ -134,7 +150,9 @@ Para realização dos testes execute o seguinte comando no diretorio do projeto
 Para gerar um relatório sobre os testes , execute os seguintes comandos
 
 `$ coverage run --source=app -m py.test  `
+
 `$ coverage report -m   `
+
 `$ coverage html`
 
 Será gerado um pasta com o nome de htmlcov na raiz do projeto, dentro da pasta abra o arquivo index.html para melhor visualização do relatório.
