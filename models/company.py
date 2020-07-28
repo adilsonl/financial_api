@@ -15,5 +15,13 @@ class Company(db.Model):
     def __repr__(self):
         return "<id {}>".format(self.id)
 
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
     def serialize(self):
         return {"id": self.id, "name": self.name, "symbol": self.symbol}

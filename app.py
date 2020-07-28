@@ -9,7 +9,7 @@ from flask_migrate import Migrate
 web_app = Flask("web_app")
 web_app.config[
     "SQLALCHEMY_DATABASE_URI"
-] = "postgresql://postgres:123Senha@localhost:5432/bank_api"
+] = "postgresql://postgres:123Senha@localhost:5432/database_api"
 web_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(web_app)
 migrate = Migrate(web_app, db)
@@ -91,7 +91,7 @@ class PriceRoutes(Resource):
             price_ = price.Price.query.filter_by(id=id).first()
             price_.id_company = data["id_company"]
             price_.price = data["price"]
-            db.session.commit()
+            price_.save()
             return {"message": f"Price  {price_.price} successfully updated"}
         except Exception as e:
             print(e)
@@ -100,8 +100,7 @@ class PriceRoutes(Resource):
     def delete(self, id):
         try:
             price_ = price.Price.query.filter_by(id=id).first()
-            db.session.delete(price_)
-            db.session.commit()
+            price_.delete()
             return {"message": f"Price  {price_.price} successfully deleted."}
 
         except Exception as e:
@@ -148,7 +147,7 @@ class CompanyRoutes(Resource):
             company_ = company.Company.query.filter_by(id=id).first()
             company_.name = data["name"]
             company_.symbol = data["symbol"]
-            db.session.commit()
+            company_.save()
             return {"message": f"Company {company_.name} successfully updated"}
         except Exception as e:
             print(e)
@@ -157,8 +156,7 @@ class CompanyRoutes(Resource):
     def delete(self, id):
         try:
             company_ = company.Company.query.filter_by(id=id).first()
-            db.session.delete(company_)
-            db.session.commit()
+            company_.delete()
             return {"message": f"Company {company_.name} successfully deleted."}
 
         except Exception as e:
@@ -206,7 +204,7 @@ class UserRoutes(Resource):
             user_.user_name = data["user_name"]
             user_.company = data["company"]
             user_.password = data["password"]
-            db.session.commit()
+            user_.save()
             return {"message": f"user {user_.user_name} successfully updated"}
         except Exception as e:
             print(e)
@@ -215,8 +213,7 @@ class UserRoutes(Resource):
     def delete(self, id):
         try:
             user_ = user.User.query.filter_by(id=id).first()
-            db.session.delete(user_)
-            db.session.commit()
+            user_.delete()
             return {"message": f"User {user_.user_name} successfully deleted."}
 
         except Exception as e:

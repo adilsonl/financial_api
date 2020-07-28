@@ -14,6 +14,14 @@ class User(db.Model):
         self.company = company
         self.password = password
 
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
     def __repr__(self):
         return "<id {}>".format(self.id)
 
