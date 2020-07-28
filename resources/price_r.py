@@ -12,7 +12,7 @@ class PriceAddGetAll(Resource):
             new_price = Price(data["id_company"], data["price"])
             db.session.add(new_price)
             db.session.commit()
-            return {"message": f"Price {new_price.name} has been created successfully."}
+            return {"message": f"Price {new_price.price} has been created successfully."}
         except Exception as e:
             return {"message": "Error :"}
 

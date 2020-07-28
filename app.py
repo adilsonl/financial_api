@@ -6,7 +6,6 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
-
 web_app = Flask("web_app")
 web_app.config[
     "SQLALCHEMY_DATABASE_URI"
@@ -18,6 +17,9 @@ CORS(web_app)
 api = Api(web_app)
 
 from models import price, company, user
+
+
+
 
 
 API_KEY = "NW84PZQEPS9SN9S7"
@@ -59,14 +61,19 @@ class PriceAddGetAll(Resource):
             new_price = price.Price(data["id_company"], data["price"])
             db.session.add(new_price)
             db.session.commit()
-            return {"message": f"Price {new_price.name} has been created successfully."}
+            return {"message": f"Price {new_price.price} has been created successfully."}
         except Exception as e:
+            print(e)
             return {"message": "Error :"}
 
     def get(self):
-        prices = price.Price.query.all()
-        results = [price_.serialize() for price_ in prices]
-        return {"count": len(results), "Prices": results, "message": "success"}
+        try:
+            prices = price.Price.query.all()
+            results = [price_.serialize() for price_ in prices]
+            return {"count": len(results), "Prices": results, "message": "success"}
+        except Exception as e:
+            print(e)
+            return {"message": "Error :"}
 
 
 class PriceRoutes(Resource):
@@ -75,6 +82,7 @@ class PriceRoutes(Resource):
             price_ = price.Price.query.filter_by(id=id).first()
             return price_.serialize()
         except Exception as e:
+            print(e)
             return {"message": "Error "}
 
     def put(self, id):
@@ -86,6 +94,7 @@ class PriceRoutes(Resource):
             db.session.commit()
             return {"message": f"Price  {price_.price} successfully updated"}
         except Exception as e:
+            print(e)
             return {"message": "Error "}
 
     def delete(self, id):
@@ -96,6 +105,7 @@ class PriceRoutes(Resource):
             return {"message": f"Price  {price_.price} successfully deleted."}
 
         except Exception as e:
+            print(e)
             return {"message": "Error "}
 
 
@@ -110,12 +120,17 @@ class CompanyAddGetAll(Resource):
                 "message": f"Company {new_company.name} has been created successfully."
             }
         except Exception as e:
+            print(e)
             return {"message": "Error :"}
 
     def get(self):
-        companies = company.Company.query.all()
-        results = [company_.serialize() for company_ in companies]
-        return {"count": len(results), "Companyes": results, "message": "success"}
+        try:
+            companies = company.Company.query.all()
+            results = [company_.serialize() for company_ in companies]
+            return {"count": len(results), "Companyes": results, "message": "success"}
+        except Exception as e:
+            print(e)
+            return {"message": "Error :"}
 
 
 class CompanyRoutes(Resource):
@@ -124,6 +139,7 @@ class CompanyRoutes(Resource):
             company_ = company.Company.query.filter_by(id=id).first()
             return company_.serialize()
         except Exception as e:
+            print(e)
             return {"message": "Error "}
 
     def put(self, id):
@@ -135,6 +151,7 @@ class CompanyRoutes(Resource):
             db.session.commit()
             return {"message": f"Company {company_.name} successfully updated"}
         except Exception as e:
+            print(e)
             return {"message": "Error "}
 
     def delete(self, id):
@@ -145,6 +162,7 @@ class CompanyRoutes(Resource):
             return {"message": f"Company {company_.name} successfully deleted."}
 
         except Exception as e:
+            print(e)
             return {"message": "Error "}
 
 
@@ -159,12 +177,17 @@ class UserAddGetAll(Resource):
                 "message": f"user {new_user.user_name} has been created successfully."
             }
         except Exception as e:
+            print(e)
             return {"message": "Error :"}
 
     def get(self):
-        users = user.User.query.all()
-        results = [user_.serialize_without_password() for user_ in users]
-        return {"count": len(results), "users": results, "message": "success"}
+        try:
+            users = user.User.query.all()
+            results = [user_.serialize_without_password() for user_ in users]
+            return {"count": len(results), "users": results, "message": "success"}
+        except Exception as e:
+            print(e)
+            return {"message": "Error :"}
 
 
 class UserRoutes(Resource):
@@ -173,6 +196,7 @@ class UserRoutes(Resource):
             user_ = user.User.query.filter_by(id=id).first()
             return user_.serialize_without_password()
         except Exception as e:
+            print(e)
             return {"message": "Error "}
 
     def put(self, id):
@@ -185,6 +209,7 @@ class UserRoutes(Resource):
             db.session.commit()
             return {"message": f"user {user_.user_name} successfully updated"}
         except Exception as e:
+            print(e)
             return {"message": "Error "}
 
     def delete(self, id):
@@ -195,9 +220,11 @@ class UserRoutes(Resource):
             return {"message": f"User {user_.user_name} successfully deleted."}
 
         except Exception as e:
+            print(e)
             return {"message": "Error "}
 
-#----------- Resources ----------
+
+# ----------- Resources ----------
 api.add_resource(PointsIbovespa, "/ibovespa")
 api.add_resource(CompanyPoints, "/points/<string:company>")
 api.add_resource(UserAddGetAll, "/user")
@@ -206,6 +233,6 @@ api.add_resource(CompanyAddGetAll, "/company")
 api.add_resource(CompanyRoutes, "/company/<int:id>")
 api.add_resource(PriceAddGetAll, "/price")
 api.add_resource(PriceRoutes, "/price/<int:id>")
-#----------- Resources ----------
+# ----------- Resources ----------
 if __name__ == "__main__":
     web_app.run(debug=True)
