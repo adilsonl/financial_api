@@ -19,22 +19,42 @@ api = Api(web_app)
 from models import price, company, user
 
 
-
-
-
 API_KEY = "NW84PZQEPS9SN9S7"
 
-
-class PointsIbovespa(Resource):
-    def get(self):
-        points = search_companies_points()
-        return points
+# ------------Functions----------#
 
 
-class CompanyPoints(Resource):
-    def get(self, company):
-        points = search_companies_points(company)
-        return points
+def create_user(data):
+    try:
+        new_user = user.User(data["user_name"], data["company"], data["password"])
+        db.session.add(new_user)
+        db.session.commit()
+        return {"message": f"user {new_user.user_name} has been created successfully."}
+    except Exception as e:
+        print(e)
+        return {"message": "Error :"}
+
+
+def create_company(data):
+    try:
+        new_company = company.Company(data["name"], data["symbol"])
+        db.session.add(new_company)
+        db.session.commit()
+        return {"message": f"Company {new_company.name} has been created successfully."}
+    except Exception as e:
+        print(e)
+        return {"message": "Error :"}
+
+
+def create_price(data):
+    try:
+        new_price = price.Price(data["id_company"], data["price"])
+        db.session.add(new_price)
+        db.session.commit()
+        return {"message": f"Price {new_price.price} has been created successfully."}
+    except Exception as e:
+        print(e)
+        return {"message": "Error :"}
 
 
 def search_companies_points(company="BOVA11.SAO"):
@@ -54,17 +74,29 @@ def search_companies_points(company="BOVA11.SAO"):
         return {"status": call_api.status_code, "error": "Something went wrong"}
 
 
+# ------------Functions----------#
+
+# ---------Classes-------------#
+class PointsIbovespa(Resource):
+    def get(self):
+        points = search_companies_points()
+        return points
+
+
+class CompanyPoints(Resource):
+    def get(self, company):
+        points = search_companies_points(company)
+        return points
+
+
 class PriceAddGetAll(Resource):
     def post(self):
-        try:
-            data = json.loads(request.data)
-            new_price = price.Price(data["id_company"], data["price"])
-            db.session.add(new_price)
-            db.session.commit()
-            return {"message": f"Price {new_price.price} has been created successfully."}
-        except Exception as e:
-            print(e)
-            return {"message": "Error :"}
+        data = json.loads(request.data)
+        if "id_company" in data and "price" in data:
+            response = create_price(data)
+            return response
+        else:
+            return {"message": "error missing arguments"}
 
     def get(self):
         try:
@@ -110,17 +142,12 @@ class PriceRoutes(Resource):
 
 class CompanyAddGetAll(Resource):
     def post(self):
-        try:
-            data = json.loads(request.data)
-            new_company = company.Company(data["name"], data["symbol"])
-            db.session.add(new_company)
-            db.session.commit()
-            return {
-                "message": f"Company {new_company.name} has been created successfully."
-            }
-        except Exception as e:
-            print(e)
-            return {"message": "Error :"}
+        data = json.loads(request.data)
+        if "name" in data and "symbol" in data:
+            response = create_company(data)
+            return response
+        else:
+            return {"message": "error missing arguments"}
 
     def get(self):
         try:
@@ -166,17 +193,12 @@ class CompanyRoutes(Resource):
 
 class UserAddGetAll(Resource):
     def post(self):
-        try:
-            data = json.loads(request.data)
-            new_user = user.User(data["user_name"], data["company"], data["password"])
-            db.session.add(new_user)
-            db.session.commit()
-            return {
-                "message": f"user {new_user.user_name} has been created successfully."
-            }
-        except Exception as e:
-            print(e)
-            return {"message": "Error :"}
+        data = json.loads(request.data)
+        if "user_name" in data and "company" in data and "password" in data:
+            response = create_user(data)
+            return response
+        else:
+            return {"message": "error missing arguments"}
 
     def get(self):
         try:
@@ -219,6 +241,9 @@ class UserRoutes(Resource):
         except Exception as e:
             print(e)
             return {"message": "Error "}
+
+
+# ---------Classes-------------#
 
 
 # ----------- Resources ----------
