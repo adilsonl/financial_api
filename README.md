@@ -12,12 +12,6 @@ Para acessar o site, basta abrir o arquivo index.html em ~/financial_api/front/i
 Este projeto foi desenvolvido utilizando o microframework Flask
 
 ## Configuração do back-end
-No diretório do projeto abra o prompt e execute o seguinte comando para instalação das bibliotecas 
-
-`$ pip install -r requirements.txt`
-
-Em seguida este
-`$ export FLASK_APP=app.py  `
 
 Para a execução dos CRUD's é necessário o ter o postgresql instalado.
 Crie um banco de dados com o nome de : 
@@ -34,6 +28,15 @@ No arquivo app.py,na linha 12
 #password: Senha do seu usuário
 #port: Porta da conexão com o banco
 ```
+
+No diretório do projeto abra o prompt e execute o seguinte comando para instalação das bibliotecas 
+
+`$ pip install -r requirements.txt`
+
+Em seguida este
+`$ export FLASK_APP=app.py  `
+
+
 Rodar as migrates para a criação das tabelas no banco
 
 `$flask db init`
